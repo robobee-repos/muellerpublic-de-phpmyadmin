@@ -1,0 +1,25 @@
+/*
+*
+*/
+cx-phpmyadmin-ingress-yaml(parent, vars) ::= <<
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: phpmyadmin
+  namespace: muellerpublic-de
+  labels:
+    app: phpmyadmin
+    tier: frontend
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: my.muellerpublic.de
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: phpmyadmin
+          servicePort: 8080
+
+>>

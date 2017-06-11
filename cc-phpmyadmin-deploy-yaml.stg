@@ -1,0 +1,62 @@
+/*
+*
+*/
+cc-phpmyadmin-deploy-yaml(parent, vars) ::= <<
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin
+  namespace: muellerpublic-de
+  labels:
+    app: phpmyadmin
+    tier: frontend
+spec:
+  ports:
+  - name: "http"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: phpmyadmin
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: phpmyadmin
+  namespace: muellerpublic-de
+  labels:
+    app: phpmyadmin
+    tier: frontend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+        tier: frontend
+    spec:
+      containers:
+      - image: phpmyadmin/phpmyadmin:4.7.1-1
+        name: phpmyadmin
+        env:
+        - name: PMA_ARBITRARY
+          value: "1"
+        ports:
+        - containerPort: 8080
+          name: "http"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+      restartPolicy: Always
+
+>>
