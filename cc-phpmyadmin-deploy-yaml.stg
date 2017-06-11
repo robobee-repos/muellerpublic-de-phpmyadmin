@@ -16,8 +16,8 @@ metadata:
 spec:
   ports:
   - name: "http"
-    port: 8080
-    targetPort: 8080
+    port: 80
+    targetPort: 80
   selector:
     app: phpmyadmin
 
@@ -48,7 +48,7 @@ spec:
         - name: PMA_ARBITRARY
           value: "1"
         ports:
-        - containerPort: 8080
+        - containerPort: 80
           name: "http"
         resources:
           limits:

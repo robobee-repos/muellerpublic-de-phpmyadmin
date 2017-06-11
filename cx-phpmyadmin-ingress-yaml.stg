@@ -20,6 +20,6 @@ spec:
       - path: /
         backend:
           serviceName: phpmyadmin
-          servicePort: 8080
+          servicePort: 80
 
 >>
